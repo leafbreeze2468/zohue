@@ -1,0 +1,68 @@
+rules_version = '2';
+
+// 做伙飲的存取規則（見 docs/adr/0001-firebase-spark-only.md）
+//   - 任何人拿到連結都能看揪團與點單
+//   - 團長 = 用管理連結驗證過的裝置（groups/{id}/admins/{uid}）
+//   - 管理金鑰放在 secrets/{id}，任何人都讀不到，只在規則裡比對
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function groupPath(id) { return /databases/$(database)/documents/groups/$(id); }
+    function isAdmin(id) {
+      return signedIn() && exists(/databases/$(database)/documents/groups/$(id)/admins/$(request.auth.uid));
+    }
+    // 與 src/domain.js 的 isLocked 相同
+    function locked(g) {
+      return g.manualLock == 'locked'
+        || (g.manualLock != 'unlocked' && g.deadline != null && request.time.toMillis() >= g.deadline);
+    }
+
+    match /secrets/{id} {
+      allow read: if false;
+      // 只能在開團的同一批寫入中建立，且建立者必須是團長本人
+      allow create: if signedIn()
+        && getAfter(groupPath(id)).data.ownerUid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['adminKey']);
+      allow update, delete: if false;
+    }
+
+    match /groups/{id} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.id == id;
+      allow update: if isAdmin(id)
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['id', 'ownerUid', 'createdAt'])
+        || (signedIn()
+          && resource.data.phase == 'poll'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votes'])
+          && request.resource.data.votes.diff(resource.data.votes).affectedKeys().hasOnly([request.auth.uid]));
+      allow delete: if false;
+
+      match /admins/{uid} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow create: if signedIn() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['key'])
+          && request.resource.data.key == getAfter(/databases/$(database)/documents/secrets/$(id)).data.adminKey;
+        allow update, delete: if false;
+      }
+
+      match /lines/{lineId} {
+        allow read: if true;
+        allow create: if signedIn()
+          && request.resource.data.deviceId == request.auth.uid
+          && request.resource.data.participant is string
+          && request.resource.data.participant.size() > 0
+          && request.resource.data.participant.size() <= 20
+          && request.resource.data.qty is int
+          && request.resource.data.qty >= 1 && request.resource.data.qty <= 50
+          && get(groupPath(id)).data.phase == 'order'
+          && !locked(get(groupPath(id)).data);
+        allow delete: if isAdmin(id)
+          || (signedIn() && resource.data.deviceId == request.auth.uid && !locked(get(groupPath(id)).data));
+        allow update: if false;
+      }
+    }
+  }
+}

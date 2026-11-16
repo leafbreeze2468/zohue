@@ -1,0 +1,711 @@
+{
+  "shop": "可不可熟成紅茶",
+  "updated": "2026-11",
+  "sources": [
+    "https://www.kebuke.com/menu/"
+  ],
+  "note": "價格為參考價，各分店可能不同。採官網『北部及離島』價格（中 500ml / 大 700ml）；其他地區部分品項便宜 5 元，商場特規店只賣大杯且較貴。外送平台價格可能較高。",
+  "sugar": [
+    "正常糖",
+    "少糖",
+    "半糖",
+    "微糖",
+    "二分糖",
+    "一分糖",
+    "無糖"
+  ],
+  "ice": [
+    "正常冰",
+    "少冰",
+    "微冰",
+    "去冰",
+    "常溫",
+    "溫",
+    "熱"
+  ],
+  "toppings": [
+    {
+      "name": "白玉珍珠",
+      "price": 10
+    },
+    {
+      "name": "水玉晶球",
+      "price": 15
+    },
+    {
+      "name": "春梅凍",
+      "price": 15
+    },
+    {
+      "name": "馬告檸檬凍",
+      "price": 15
+    }
+  ],
+  "categories": [
+    {
+      "name": "季節限定",
+      "items": [
+        {
+          "name": "酒吧監製系列——白柚水玉紅烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 65
+            },
+            {
+              "size": "大",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "酒吧監製系列——檸檬冷露紅烏龍",
+          "sizes": [
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "酒吧監製系列——黑葉荔香紅烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "18週年——紅烏龍茶王歐蕾",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 60
+            },
+            {
+              "size": "大",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "18週年——紅烏龍茶王",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "極上焙茶烏龍奶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "白玉紅豆烏龍歐蕾",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 70
+            },
+            {
+              "size": "大",
+              "price": 85
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "黑葉荔枝烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "好茶",
+      "items": [
+        {
+          "name": "熟成紅茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 35
+            },
+            {
+              "size": "大",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "麗春紅茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 35
+            },
+            {
+              "size": "大",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "春芽綠茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 35
+            },
+            {
+              "size": "大",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "胭脂紅茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "茶花輕焙烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "冬瓜",
+      "items": [
+        {
+          "name": "雪花冷露",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 35
+            },
+            {
+              "size": "大",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "熟成冷露",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 40
+            },
+            {
+              "size": "大",
+              "price": 45
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "春芽冷露",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 40
+            },
+            {
+              "size": "大",
+              "price": 45
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "胭脂冷露",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "檸檬冷露",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "手作",
+      "items": [
+        {
+          "name": "熟檸紅茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 55
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "春檸綠茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 55
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "春梅冰茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "金蜜熟成",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 53
+            },
+            {
+              "size": "大",
+              "price": 63
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "金蜜檸檬",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 53
+            },
+            {
+              "size": "大",
+              "price": 63
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "胭脂多多",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "茶花烏龍梅",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "茶花烏龍多多",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "蘋果麗春",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 59
+            },
+            {
+              "size": "大",
+              "price": 69
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "蘋果春芽",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 59
+            },
+            {
+              "size": "大",
+              "price": 69
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "蘋果茶花烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 65
+            },
+            {
+              "size": "大",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "鮮奶茶",
+      "items": [
+        {
+          "name": "熟成歐蕾",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "冷露歐蕾",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "金蜜歐蕾",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 60
+            },
+            {
+              "size": "大",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "胭脂歐蕾",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 59
+            },
+            {
+              "size": "大",
+              "price": 69
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "白玉歐蕾",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 60
+            },
+            {
+              "size": "大",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "奶茶",
+      "items": [
+        {
+          "name": "熟成奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 55
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "春芽奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 55
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "胭脂奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "白玉奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "厚乳",
+      "items": [
+        {
+          "name": "茶花烏龍厚乳",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 59
+            },
+            {
+              "size": "大",
+              "price": 69
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "蘋果春芽厚乳",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 69
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "冰淇淋",
+      "items": [
+        {
+          "name": "雪藏紅茶",
+          "sizes": [
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "雪藏奶茶",
+          "sizes": [
+            {
+              "size": "大",
+              "price": 69
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        }
+      ]
+    }
+  ],
+  "verify": [
+    "官網價格欄位以三個地區分頁依序對應（北部及離島/其他地區/商場特規店）解讀，請在官網切換『北部及離島』分頁確認",
+    "極上焙茶烏龍奶、白玉紅豆烏龍歐蕾、黑葉荔枝烏龍官網標示『11/24 登場』，抓取時（11/16）尚未上市",
+    "季節限定品項（酒吧監製、18週年系列）為期間限定，可能隨時下架",
+    "甜度選項列表為推定：官網只說明檸檬冷露紅烏龍『沒有二分、一分』、蘋果系列『最低一分糖』，完整甜度階層（是否有微糖/二分/一分）請確認",
+    "冰量選項為推定：官網提到常溫、溫、熱與去冰/微冰/少冰/正常冰，請確認是否全部品項適用",
+    "冬瓜系列與雪花冷露、冷露歐蕾的減糖方式特殊（加綠茶減甜），沒有標為 fixedSugar，請確認可選甜度",
+    "雪藏紅茶是否可做熱飲官網未說明（雪藏奶茶明確不可熱），暫標 noHot=false",
+    "春梅凍、馬告檸檬凍溫、熱飲不適用（App 若要限制需另處理）",
+    "未收錄僅特定門市販售的金蒔燒/雞蛋糕點心"
+  ]
+}

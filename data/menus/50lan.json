@@ -1,0 +1,733 @@
+{
+  "shop": "50嵐",
+  "updated": "2026-11",
+  "sources": [
+    "https://cpok.tw/41121（北區價目表圖片 https://cpok.tw/wp-content/uploads/2025/01/50.png，文章標示為 2026 北區最新）"
+  ],
+  "note": "北區（台北、新北、基隆）價格；中南部價格不同，開團後可修改",
+  "sugar": [
+    "正常",
+    "9分",
+    "少糖",
+    "半糖",
+    "微糖",
+    "無糖"
+  ],
+  "ice": [
+    "正常冰",
+    "少冰",
+    "去冰",
+    "熱"
+  ],
+  "toppings": [
+    {
+      "name": "珍珠",
+      "price": 5
+    },
+    {
+      "name": "波霸",
+      "price": 5
+    },
+    {
+      "name": "椰果",
+      "price": 5
+    }
+  ],
+  "categories": [
+    {
+      "name": "找好茶",
+      "items": [
+        {
+          "name": "茉莉綠茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 35
+            },
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "阿薩姆紅茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 35
+            },
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "四季春青茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 35
+            },
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "黃金烏龍",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 35
+            },
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "檸檬綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "梅の綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "桔子綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "8冰綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "養樂多綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "旺來紅/柚子紅",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "鮮柚綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        }
+      ]
+    },
+    {
+      "name": "找口感",
+      "items": [
+        {
+          "name": "四季春+珍波椰",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 40
+            },
+            {
+              "size": "L",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "波霸紅/綠/青/烏",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 40
+            },
+            {
+              "size": "L",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "波霸奶茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "波霸奶綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "波霸烏龍奶茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "珍珠紅/綠/青/烏",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 40
+            },
+            {
+              "size": "L",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "珍珠奶茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "珍珠奶綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "椰果奶茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "布丁奶茶/奶綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "布丁紅/綠/青/烏",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "找奶茶",
+      "items": [
+        {
+          "name": "奶茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "奶綠",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "紅茶瑪奇朵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "烏龍瑪奇朵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "四季奶青",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "黃金烏龍奶茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "阿華田",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "找新鮮",
+      "items": [
+        {
+          "name": "檸檬汁",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "金桔檸檬",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "檸檬梅汁",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "檸檬養樂多",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 80
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "8冰茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "柚子茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "鮮柚汁",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "葡萄柚多多",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 80
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        }
+      ]
+    },
+    {
+      "name": "紅茶拿鐵",
+      "items": [
+        {
+          "name": "紅茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "綠茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "黃金烏龍拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "阿華田拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 80
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "找冰淇淋",
+      "items": [
+        {
+          "name": "冰淇淋紅茶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "芒果青",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "荔枝烏龍",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 50
+            },
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    }
+  ],
+  "verify": [
+    "價目表圖片上傳於 2025/01，文章稱為 2026 北區最新；請確認價格是否仍正確",
+    "加料價格：純茶類中杯 +5、大杯 +10，其他飲品通常免費；目前格式只能填一個價格，暫填 5",
+    "價目表標 ◆ 的是『不建議熱飲』，已設為不提供熱飲"
+  ]
+}

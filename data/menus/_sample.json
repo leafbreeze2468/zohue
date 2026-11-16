@@ -1,0 +1,20 @@
+{
+  "shop": "測試飲料店",
+  "updated": "2026-11",
+  "sources": [],
+  "note": "開發測試用的假菜單，正式菜單整理好後會自動出現在選單裡",
+  "sugar": ["正常糖", "少糖", "半糖", "微糖", "無糖"],
+  "ice": ["正常冰", "少冰", "微冰", "去冰", "溫", "熱"],
+  "toppings": [{ "name": "珍珠", "price": 10 }, { "name": "椰果", "price": 10 }],
+  "categories": [
+    { "name": "茶", "items": [
+      { "name": "紅茶", "sizes": [{ "size": "M", "price": 30 }, { "size": "L", "price": 35 }], "fixedSugar": false, "noHot": false },
+      { "name": "綠茶", "sizes": [{ "size": "M", "price": 30 }, { "size": "L", "price": 35 }], "fixedSugar": false, "noHot": false }
+    ]},
+    { "name": "奶茶", "items": [
+      { "name": "珍珠奶茶", "sizes": [{ "size": "M", "price": 50 }, { "size": "L", "price": 60 }], "fixedSugar": false, "noHot": true },
+      { "name": "鮮奶茶", "sizes": [{ "size": "L", "price": 65 }], "fixedSugar": true, "noHot": false }
+    ]}
+  ],
+  "verify": []
+}

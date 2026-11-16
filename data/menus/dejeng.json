@@ -1,0 +1,494 @@
+{
+  "shop": "得正",
+  "updated": "2026-11",
+  "sources": [
+    "https://supertaste.tvbs.com.tw/hot/350077"
+  ],
+  "note": "價格為參考價，各分店可能不同。得正菜單全台統一價（離島、百貨店型除外，以各店為準），故無南北價差。",
+  "sugar": [
+    "正常糖",
+    "少糖",
+    "半糖",
+    "微糖",
+    "無糖"
+  ],
+  "ice": [
+    "正常冰",
+    "少冰",
+    "微冰",
+    "去冰",
+    "溫",
+    "熱"
+  ],
+  "toppings": [
+    {
+      "name": "珍珠",
+      "price": 10
+    },
+    {
+      "name": "黃金珍珠",
+      "price": 10
+    },
+    {
+      "name": "焙烏龍茶凍",
+      "price": 10
+    }
+  ],
+  "categories": [
+    {
+      "name": "Original TEA 原茶",
+      "items": [
+        {
+          "name": "紅茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 25
+            },
+            {
+              "size": "大",
+              "price": 30
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "綠茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 25
+            },
+            {
+              "size": "大",
+              "price": 30
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "春烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 30
+            },
+            {
+              "size": "大",
+              "price": 35
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "輕烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 30
+            },
+            {
+              "size": "大",
+              "price": 35
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "焙烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 30
+            },
+            {
+              "size": "大",
+              "price": 35
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "緋烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 35
+            },
+            {
+              "size": "大",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "Classic MILK TEA 奶茶",
+      "items": [
+        {
+          "name": "奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "焙烏龍奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 45
+            },
+            {
+              "size": "大",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "珍珠奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "黃金珍珠奶綠",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "烘吉奶茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "Double FRUIT 果茶",
+      "items": [
+        {
+          "name": "檸檬春烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "香橙春烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 60
+            },
+            {
+              "size": "大",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "甘蔗春烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 60
+            },
+            {
+              "size": "大",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "青梅春烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "優酪春烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "雙柚金烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "Fresh MILK 鮮奶茶",
+      "items": [
+        {
+          "name": "紅茶鮮奶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "輕烏龍鮮奶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "焙烏龍鮮奶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "烘吉鮮奶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "Cheese MILK FOAM 芝士奶蓋",
+      "items": [
+        {
+          "name": "芝士奶蓋春烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "芝士奶蓋焙烏龍",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 50
+            },
+            {
+              "size": "大",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "芝士奶蓋阿華田",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "芝士奶蓋烘吉茶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 55
+            },
+            {
+              "size": "大",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "季節新品 蜜蘋苦瓜系列",
+      "items": [
+        {
+          "name": "蜜蘋苦瓜綠",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 60
+            },
+            {
+              "size": "大",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "蜜蘋苦瓜奶綠",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 65
+            },
+            {
+              "size": "大",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "蜜蘋苦瓜綠茶鮮奶",
+          "sizes": [
+            {
+              "size": "中",
+              "price": 75
+            },
+            {
+              "size": "大",
+              "price": 85
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    }
+  ],
+  "verify": [
+    "唯一來源為食尚玩家 2026-07 文章（菜單圖日期 2026/07/19），非官網；11 月價格與品項可能已變動",
+    "蜜蘋苦瓜系列為夏季限定（7/1 開賣），11 月可能已下架",
+    "烘吉奶茶 50/60 在來源中未標明尺寸，中/大對應不確定",
+    "烘吉鮮奶只查到單一價格 70，是否只有中杯或大杯不明，請確認",
+    "甜度、冰量選項未在來源完整列出，暫用通用值；芝士奶蓋系列據稱『固定少冰』，請確認是否可做熱飲",
+    "不可調甜度 / 無熱飲品項未查到，fixedSugar/noHot 暫全為 false",
+    "官網或冬季新品未查（搜尋預算限制），可能有新季節品項"
+  ]
+}

@@ -1,0 +1,637 @@
+{
+  "shop": "迷客夏",
+  "updated": "2026-11",
+  "sources": [
+    "https://www.beauty321.com/post/46627（官方北部價目表圖片，圖上版本標記 2025-4-30-N-I）"
+  ],
+  "note": "北部價格；中南部與百貨店不同，開團後可修改",
+  "sugar": [
+    "正常糖",
+    "少糖",
+    "半糖",
+    "微糖",
+    "無糖"
+  ],
+  "ice": [
+    "正常冰",
+    "少冰",
+    "微冰",
+    "去冰",
+    "溫",
+    "熱"
+  ],
+  "toppings": [
+    {
+      "name": "珍珠",
+      "price": 10
+    },
+    {
+      "name": "仙草凍",
+      "price": 10
+    },
+    {
+      "name": "綠茶凍",
+      "price": 10
+    },
+    {
+      "name": "脆啵啵球",
+      "price": 15
+    },
+    {
+      "name": "蜂蜜黑糖粉粿",
+      "price": 15
+    }
+  ],
+  "categories": [
+    {
+      "name": "愛茶的牛",
+      "items": [
+        {
+          "name": "水之森玄米抹茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "娜杯紅茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 45
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "伯爵/大正紅茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "原片初露青茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "茉莉原淬綠茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "琥珀高峰烏龍",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "牧場鮮奶茶",
+      "items": [
+        {
+          "name": "娜杯紅茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 60
+            },
+            {
+              "size": "L",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "伯爵紅茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "大正紅茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "琥珀烏龍拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "茉香綠茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "原片青茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "珍珠紅茶拿鐵（伯爵/大正）",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "珍珠娜杯紅茶拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 70
+            },
+            {
+              "size": "L",
+              "price": 80
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "綠光牧場鮮奶",
+      "items": [
+        {
+          "name": "芋頭鮮奶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 70
+            },
+            {
+              "size": "L",
+              "price": 90
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "珍珠鮮奶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 70
+            },
+            {
+              "size": "L",
+              "price": 90
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "手炒黑糖鮮奶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 85
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "嫩仙草凍奶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 85
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "玄米抹茶鮮奶",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 85
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "綠光純鮮奶家庭號",
+          "sizes": [
+            {
+              "size": "家庭號",
+              "price": 169
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "無咖啡因",
+      "items": [
+        {
+          "name": "輕纖蕎麥茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 45
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "輕纖蕎麥拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 65
+            },
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "原鄉冬瓜茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 40
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "焙香決明大麥",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 35
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "焙香大麥拿鐵",
+          "sizes": [
+            {
+              "size": "M",
+              "price": 55
+            },
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    },
+    {
+      "name": "牧場鮮奶冰",
+      "items": [
+        {
+          "name": "紅茶拿鐵冰淇淋",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "愛文芒果歐蕾冰淇淋",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        }
+      ]
+    },
+    {
+      "name": "手作特調",
+      "items": [
+        {
+          "name": "海鹽芒果綠",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "島嶼芒果青梅綠",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "熱帶水果氣泡",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "蜜桃烏龍",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "蜜桃茉莉",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "熟釀青梅綠",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "熟釀青梅檸",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "白甘蔗青茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 75
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "冬瓜青茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 55
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "冬瓜檸檬/麥茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 55
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        },
+        {
+          "name": "柳丁綠茶/青茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "青檸香茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "香柚綠茶",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "柚蜜白玉",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 70
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "蜂蜜檸檬晶凍",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 60
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "養樂多綠",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 55
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "冰萃柳丁/檸檬",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 65
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": true
+        },
+        {
+          "name": "冰糖洛神梅",
+          "sizes": [
+            {
+              "size": "L",
+              "price": 50
+            }
+          ],
+          "fixedSugar": false,
+          "noHot": false
+        }
+      ]
+    }
+  ],
+  "verify": [
+    "價目表是 2025-04-30 北部版，可能已調價；2026 冬季新品（太妃序曲系列，11/11 起）未收錄",
+    "手作特調的『冷飲限定』藍點是從縮圖判讀，請對照價目表確認哪些不能做熱的",
+    "脆啵啵球、蜂蜜黑糖粉粿為冷飲限定加料，目前格式無法限制，請團員自行注意"
+  ]
+}
