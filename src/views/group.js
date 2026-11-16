@@ -1,4 +1,5 @@
-import { addLine, claimAdmin, deleteLine, deviceId, subscribe, updateGroup, vote } from '../store/index.js';
+import { addLine, deleteLine, deviceId, setReport, subscribe, updateGroup, updateLine, vote } from '../store/index.js';
+import { recordVisit } from '../history.js';
 import {
   bill, isLocked, lineTotal, mergeRoster, missingMembers, pollClosed, pollResult, promotionDiscount, promotionLabel, reminderText, shopSlip,
 } from '../domain.js';
@@ -194,28 +195,37 @@ export function renderGroup(app, id, adminKey) {
   }
 
   // ── 點單對話框 ─────────────────────────────────────────
-  function openOrder(item) {
-    const who = $('#who').value.trim();
+  /** 用名稱在這團的菜單找品項 */
+  const findItem = (name) => data.group.menu.categories.flatMap((c) => c.items).find((it) => it.name === name);
+
+  /** 點單對話框；傳 existing 時是修改那筆點單 */
+  function openOrder(item, existing = null) {
+    const who = existing ? existing.participant : $('#who').value.trim();
     if (!who) { $('#who').focus(); return alert('先填你的名字喔'); }
-    if (locked()) return alert('這團已經截止了');
+    if (locked() && !admin) return alert('這團已經截止了');
     const menu = data.group.menu;
     const ice = item.noHot ? menu.ice.filter((x) => !/熱|溫/.test(x)) : menu.ice;
-    const radios = (name, options) => options.map((o, i) =>
-      `<label class="chip"><input type="radio" name="${name}" value="${i}" ${i === 0 ? 'checked' : ''} />${esc(typeof o === 'string' ? o : `${o.size} $${o.price}`)}</label>`).join('');
+    const label = (o) => (typeof o === 'string' ? o : o.size);
+    const radios = (name, options, current) => {
+      const picked = Math.max(0, options.findIndex((o) => label(o) === current));
+      return options.map((o, i) =>
+        `<label class="chip"><input type="radio" name="${name}" value="${i}" ${i === picked ? 'checked' : ''} />${esc(typeof o === 'string' ? o : `${o.size} $${o.price}`)}</label>`).join('');
+    };
+    const hasTop = (t) => existing?.toppings.some((x) => x.name === t.name);
     const dlg = $('#dlg');
     dlg.innerHTML = `
       <form method="dialog" id="order-form">
-        <h2>${esc(item.name)}</h2>
-        <fieldset><legend>尺寸</legend>${radios('size', item.sizes)}</fieldset>
-        ${item.fixedSugar ? '<p class="hint">這個品項甜度固定</p>' : `<fieldset><legend>甜度</legend>${radios('sugar', menu.sugar)}</fieldset>`}
-        <fieldset><legend>冰塊</legend>${radios('ice', ice)}</fieldset>
+        <h2>${esc(item.name)}${existing ? ` <span class="muted small">修改 ${esc(who)} 的點單</span>` : ''}</h2>
+        <fieldset><legend>尺寸</legend>${radios('size', item.sizes, existing?.size)}</fieldset>
+        ${item.fixedSugar ? '<p class="hint">這個品項甜度固定</p>' : `<fieldset><legend>甜度</legend>${radios('sugar', menu.sugar, existing?.sugar)}</fieldset>`}
+        <fieldset><legend>冰塊</legend>${radios('ice', ice, existing?.ice)}</fieldset>
         ${menu.toppings.length ? `<fieldset><legend>加料</legend>${menu.toppings.map((t, i) =>
-          `<label class="chip"><input type="checkbox" name="top" value="${i}" />${esc(t.name)} +$${t.price}</label>`).join('')}</fieldset>` : ''}
-        <label>杯數 <input name="qty" type="number" min="1" max="20" value="1" /></label>
-        <label>備註 <input name="note" maxlength="40" placeholder="例如：分開裝" /></label>
+          `<label class="chip"><input type="checkbox" name="top" value="${i}" ${hasTop(t) ? 'checked' : ''} />${esc(t.name)} +$${t.price}</label>`).join('')}</fieldset>` : ''}
+        <label>杯數 <input name="qty" type="number" min="1" max="20" value="${existing?.qty ?? 1}" /></label>
+        <label>備註 <input name="note" maxlength="40" placeholder="例如：分開裝" value="${esc(existing?.note || '')}" /></label>
         <div class="row">
           <button value="cancel" class="ghost">取消</button>
-          <button value="ok" class="primary">加入</button>
+          <button value="ok" class="primary">${existing ? '儲存' : '加入'}</button>
         </div>
       </form>`;
     dlg.showModal();
@@ -223,7 +233,7 @@ export function renderGroup(app, id, adminKey) {
       if (dlg.returnValue !== 'ok') return;
       const f = new FormData($('#order-form'));
       const size = item.sizes[Number(f.get('size'))];
-      addLine(id, {
+      const line = {
         participant: who,
         item: item.name,
         size: size.size,
@@ -233,7 +243,8 @@ export function renderGroup(app, id, adminKey) {
         toppings: f.getAll('top').map((i) => menu.toppings[Number(i)]),
         qty: Math.max(1, Number(f.get('qty')) || 1),
         note: f.get('note').trim(),
-      }, { locked: locked() }).catch(fail);
+      };
+      (existing ? updateLine(id, existing.id, line, { adminKey, locked: locked() }) : addLine(id, line, { locked: locked() })).catch(fail);
     };
   }
 
@@ -249,14 +260,37 @@ export function renderGroup(app, id, adminKey) {
       return;
     }
     $('#lines').innerHTML = data.lines.map((l) => {
-      const canDelete = admin || (l.deviceId === me && !locked());
+      const canEdit = admin || (l.deviceId === me && !locked());
       return `<div class="line ${l.deviceId === me ? 'mine' : ''}">
         <b>${esc(l.participant)}</b> ${describe(l)} <span class="muted">$${lineTotal(l)}</span>
-        ${canDelete ? `<button class="del small ghost" data-id="${l.id}">刪除</button>` : ''}
+        <span class="actions">
+          ${locked() ? '' : `<button class="follow small" data-id="${l.id}" title="點一杯一樣的">＋1 跟點</button>`}
+          ${canEdit ? `<button class="edit small ghost" data-id="${l.id}">修改</button>
+            <button class="del small ghost" data-id="${l.id}">刪除</button>` : ''}
+        </span>
       </div>`;
     }).join('');
+    const lineOf = (b) => data.lines.find((l) => l.id === b.dataset.id);
     $('#lines').querySelectorAll('.del').forEach((b) => {
-      b.onclick = () => deleteLine(id, b.dataset.id, { adminKey, locked: locked() }).catch(fail);
+      b.onclick = () => confirm('確定刪除這筆點單？') && deleteLine(id, b.dataset.id, { adminKey, locked: locked() }).catch(fail);
+    });
+    $('#lines').querySelectorAll('.edit').forEach((b) => {
+      b.onclick = () => {
+        const l = lineOf(b);
+        const item = findItem(l.item);
+        if (!item?.sizes.length) return alert('菜單上找不到這個品項，只能刪掉重點');
+        openOrder(item, l);
+      };
+    });
+    // 跟點：同樣的品項與客製選項，算我一杯（備註不跟）
+    $('#lines').querySelectorAll('.follow').forEach((b) => {
+      b.onclick = () => {
+        const who = $('#who').value.trim();
+        if (!who) { $('#who').focus(); return alert('先填你的名字喔'); }
+        const { item, size, sizePrice, sugar, ice, toppings } = lineOf(b);
+        addLine(id, { participant: who, item, size, sizePrice, sugar, ice, toppings, qty: 1, note: '' }, { locked: locked() })
+          .catch(fail);
+      };
     });
   }
 
@@ -273,7 +307,7 @@ export function renderGroup(app, id, adminKey) {
     const paid = g.paid || {};
     $('#tab-slip').innerHTML = `
       <div class="card">
-        <h2>給店家的彙總單 <button id="copy-slip" class="small">複製</button></h2>
+        <h2>給店家的彙總單 <button id="copy-slip" class="small">複製</button> <button id="clerk" class="small">店員模式</button></h2>
         ${slip.length ? `<table>${slip.map((r) => `<tr>
           <td>${esc(r.item)} ${esc(r.size)}<br><span class="muted">${esc(r.sugar)}／${esc(r.ice)}${r.toppings.length ? `＋${esc(r.toppings.join('＋'))}` : ''}</span>
           ${r.notes.length ? `<br><span class="note">${esc(r.notes.join('；'))}</span>` : ''}</td>
@@ -303,16 +337,25 @@ export function renderGroup(app, id, adminKey) {
           <button>新增</button></form>
           <p class="hint">買 N 送 M 會送最便宜的杯；第二杯半價由貴到便宜兩兩一組。店家規則不同時，請改用額外費用輸入。</p>` : ''}
       </div>
+      ${payCard(result)}
       <div class="card">
         <h2>每人應付 <span class="muted small">總計 $${result.grandTotal}</span></h2>
-        ${result.people.map((p) => `<label class="line pay">
+        ${result.people.map((p) => {
+          const r = reportFor(p.participant);
+          return `<label class="line pay">
           ${admin ? `<input type="checkbox" data-p="${esc(p.participant)}" ${paid[p.participant] ? 'checked' : ''} />` : (paid[p.participant] ? '✅' : '⬜')}
-          <b>${esc(p.participant)}</b> ${p.cups} 杯 <span class="num">$${p.due}</span></label>`).join('')}
+          <b>${esc(p.participant)}</b> ${p.cups} 杯
+          ${r && !paid[p.participant] ? `<span class="badge">已回報${r.ref ? `：${esc(r.ref)}` : ''}</span>` : ''}
+          <span class="num">$${p.due}</span></label>`;
+        }).join('')}
+        ${admin ? '<p class="hint">團員回報付款後會標示「已回報」，確認收到再打勾。</p>' : ''}
         ${result.roundingDiff ? `<p class="hint">四捨五入後，團長${result.roundingDiff > 0 ? `會多收 $${result.roundingDiff}` : `要自己補 $${-result.roundingDiff}`}。</p>` : ''}
         ${admin ? '<button id="copy-remind">複製催款訊息</button>' : ''}
       </div>`;
 
     $('#copy-slip').onclick = (e) => copy(slipText(slip, result), e.target);
+    $('#clerk').onclick = () => openClerk(slip, result);
+    bindPay();
     if (!admin) return;
     $('#copy-remind').onclick = (e) => copy(reminderText(g, result, paid), e.target);
     $('#tab-slip').querySelectorAll('input[data-p]').forEach((cb) => {
@@ -343,13 +386,85 @@ export function renderGroup(app, id, adminKey) {
     };
   }
 
+  /** 某位團員的付款回報（團長看得到全部，團員只看得到自己的） */
+  function reportFor(participant) {
+    return Object.values(data.reports || {}).find((r) => r.participant === participant);
+  }
+
+  function payCard(result) {
+    const g = data.group;
+    const mine = data.reports?.[me];
+    const myNames = [...new Set(data.lines.filter((l) => l.deviceId === me).map((l) => l.participant))];
+    const due = (name) => result.people.find((p) => p.participant === name)?.due ?? 0;
+    const paid = g.paid || {};
+    let report = '';
+    if (mine) {
+      report = paid[mine.participant] ? '<p>✅ 團長已確認收到</p>'
+        : `<p>已回報 ${esc(mine.participant)} 付款${mine.ref ? `（${esc(mine.ref)}）` : ''}，等團長確認</p>
+           <button id="report-undo" class="small ghost">撤回回報</button>`;
+    } else if (myNames.length) {
+      report = `<form id="report" class="row wrap">
+        ${myNames.length > 1 ? `<select name="who">${myNames.map((n) => `<option>${esc(n)}</option>`).join('')}</select>`
+          : `<input type="hidden" name="who" value="${esc(myNames[0])}" />`}
+        <input name="ref" maxlength="30" placeholder="末五碼或付款方式（可不填）" />
+        <button>我已付款${myNames.length > 1 ? '' : ` $${due(myNames[0])}`}</button>
+      </form>`;
+    }
+    return `<div class="card">
+      <h2>付款方式</h2>
+      ${g.payInfo ? `<p class="pay-info">${esc(g.payInfo)}</p><button id="copy-payinfo" class="small">複製</button>`
+        : `<p class="muted">${admin ? '填上收款方式，大家就知道要轉到哪裡。' : '團長還沒填收款方式。'}</p>`}
+      ${admin ? `<details ${g.payInfo ? '' : 'open'}><summary class="small">${g.payInfo ? '修改' : '填寫'}收款方式</summary>
+        <textarea id="payinfo-input" rows="2" maxlength="100" placeholder="例如：國泰 013 帳號 1234-5678-9012，或 LINE Pay 轉給我">${esc(g.payInfo || '')}</textarea>
+        <button id="payinfo-save" class="small">儲存</button></details>` : ''}
+      ${report}
+    </div>`;
+  }
+
+  function bindPay() {
+    const g = data.group;
+    if ($('#copy-payinfo')) $('#copy-payinfo').onclick = (e) => copy(g.payInfo, e.target);
+    if ($('#payinfo-save')) {
+      $('#payinfo-save').onclick = () => updateGroup(id, { payInfo: $('#payinfo-input').value.trim() }, adminKey).catch(fail);
+    }
+    if ($('#report-undo')) $('#report-undo').onclick = () => setReport(id, null).catch(fail);
+    if ($('#report')) {
+      $('#report').onsubmit = (e) => {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        setReport(id, { participant: f.get('who'), ref: f.get('ref').trim() }).catch(fail);
+      };
+    }
+  }
+
+  // ── 店員模式：大字、可打勾，照著唸給店員或拿給店員看 ──
+  function openClerk(slip, result) {
+    const dlg = $('#dlg');
+    dlg.innerHTML = `<div class="clerk">
+      <div class="row"><h2>${esc(data.group.shopName)}　共 ${result.totalCups} 杯</h2>
+        <button id="clerk-close" class="ghost small">關閉</button></div>
+      ${slip.map((r) => `<label class="clerk-row">
+        <input type="checkbox" />
+        <span class="clerk-qty">${r.qty}</span>
+        <span><b>${esc(r.item)}</b> ${esc(r.size)}<br>${esc(r.sugar)}／${esc(r.ice)}${r.toppings.length ? `＋${esc(r.toppings.join('＋'))}` : ''}
+        ${r.notes.length ? `<br><span class="note">${esc(r.notes.join('；'))}</span>` : ''}</span>
+      </label>`).join('') || '<p class="muted">還沒有點單</p>'}
+      <p class="hint">點完一項就打勾，避免漏點。</p></div>`;
+    dlg.classList.add('full');
+    dlg.onclose = () => dlg.classList.remove('full');
+    dlg.showModal();
+    $('#clerk-close').onclick = () => dlg.close();
+  }
+
   // ── 即時更新 ───────────────────────────────────────────
-  const unsubscribe = subscribe(id, (next) => {
+  const unsubscribe = subscribe(id, onData, { admin });
+  function onData(next) {
     if (!next) {
       app.innerHTML = '<div class="card"><h2>找不到這一團</h2><p>連結可能打錯了，或這團已經過期刪除。</p><a href="#/">自己開一團</a></div>';
       return;
     }
     data = next;
+    recordVisit({ id, title: data.group.phase === 'poll' ? '投票中：今天喝哪家？' : data.group.shopName, organizer: data.group.organizer, adminKey });
     renderHead();
     const polling = data.group.phase === 'poll';
     $('#poll').hidden = !polling;
@@ -369,7 +484,7 @@ export function renderGroup(app, id, adminKey) {
     renderSlip();
     // 記住我在這家店點的內容，下次就能一鍵點老樣子
     rememberUsual(data.group.shopName, data.lines.filter((l) => l.deviceId === me));
-  });
+  }
 
   // 截止時間到了要自動切成「已截止」，即使沒有人點單觸發更新
   const timer = setInterval(() => {

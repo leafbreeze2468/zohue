@@ -62,12 +62,25 @@ const line = { participant: '小C', item: '紅茶', size: 'L', sizePrice: 30, su
 await expect('C 點單', true, () => setDoc(doc(C.db, 'groups', gid, 'lines', 'c1'), { ...line, deviceId: C.uid }));
 await expect('C 冒用 B 的身分點單', false, () => setDoc(doc(C.db, 'groups', gid, 'lines', 'c2'), { ...line, deviceId: B.uid }));
 await expect('C 點 0 杯', false, () => setDoc(doc(C.db, 'groups', gid, 'lines', 'c3'), { ...line, qty: 0, deviceId: C.uid }));
-await expect('C 修改已送出的點單', false, () => updateDoc(doc(C.db, 'groups', gid, 'lines', 'c1'), { qty: 5 }));
-await expect('B（團長）以外的人刪 C 的點單', false, async () => {
-  const D = await user('D');
-  return deleteDoc(doc(D.db, 'groups', gid, 'lines', 'c1'));
-});
+const D = await user('D');
+await expect('C 修改自己的點單', true, () => updateDoc(doc(C.db, 'groups', gid, 'lines', 'c1'), { qty: 2, sugar: '半糖' }));
+await expect('C 把點單改成 0 杯', false, () => updateDoc(doc(C.db, 'groups', gid, 'lines', 'c1'), { qty: 0 }));
+await expect('C 把點單轉給別的裝置', false, () => updateDoc(doc(C.db, 'groups', gid, 'lines', 'c1'), { deviceId: D.uid }));
+await expect('D 修改 C 的點單', false, () => updateDoc(doc(D.db, 'groups', gid, 'lines', 'c1'), { qty: 3 }));
+await expect('D 刪 C 的點單', false, () => deleteDoc(doc(D.db, 'groups', gid, 'lines', 'c1')));
+
+const report = { participant: '小C', ref: '12345', at: Date.now() };
+await expect('C 回報付款', true, () => setDoc(doc(C.db, 'groups', gid, 'reports', C.uid), report));
+await expect('C 讀自己的回報', true, () => getDoc(doc(C.db, 'groups', gid, 'reports', C.uid)));
+await expect('D 讀 C 的回報', false, () => getDoc(doc(D.db, 'groups', gid, 'reports', C.uid)));
+await expect('團長讀 C 的回報', true, () => getDoc(doc(A.db, 'groups', gid, 'reports', C.uid)));
+await expect('C 替 D 回報付款', false, () => setDoc(doc(C.db, 'groups', gid, 'reports', D.uid), report));
+await expect('C 回報夾帶其他欄位', false, () => setDoc(doc(C.db, 'groups', gid, 'reports', C.uid), { ...report, paid: true }));
+await expect('C 自己改成已付款', false, () => updateDoc(doc(C.db, 'groups', gid), { [`paid.小C`]: true }));
+
 await expect('A 鎖單', true, () => updateDoc(doc(A.db, 'groups', gid), { manualLock: 'locked' }));
+await expect('鎖單後 C 修改點單', false, () => updateDoc(doc(C.db, 'groups', gid, 'lines', 'c1'), { qty: 1 }));
+await expect('鎖單後團長修改點單', true, () => updateDoc(doc(A.db, 'groups', gid, 'lines', 'c1'), { qty: 1 }));
 await expect('鎖單後 C 點單', false, () => setDoc(doc(C.db, 'groups', gid, 'lines', 'c4'), { ...line, deviceId: C.uid }));
 await expect('鎖單後 C 刪自己的點單', false, () => deleteDoc(doc(C.db, 'groups', gid, 'lines', 'c1')));
 await expect('鎖單後團長刪點單', true, () => deleteDoc(doc(A.db, 'groups', gid, 'lines', 'c1')));

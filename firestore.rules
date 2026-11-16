@@ -48,20 +48,38 @@ service cloud.firestore {
         allow update, delete: if false;
       }
 
+      // 點單內容的基本檢查（新增與修改共用）
+      function validLine(d) {
+        return d.participant is string && d.participant.size() > 0 && d.participant.size() <= 20
+          && d.qty is int && d.qty >= 1 && d.qty <= 50;
+      }
+
       match /lines/{lineId} {
         allow read: if true;
         allow create: if signedIn()
           && request.resource.data.deviceId == request.auth.uid
-          && request.resource.data.participant is string
-          && request.resource.data.participant.size() > 0
-          && request.resource.data.participant.size() <= 20
-          && request.resource.data.qty is int
-          && request.resource.data.qty >= 1 && request.resource.data.qty <= 50
+          && validLine(request.resource.data)
           && get(groupPath(id)).data.phase == 'order'
           && !locked(get(groupPath(id)).data);
         allow delete: if isAdmin(id)
           || (signedIn() && resource.data.deviceId == request.auth.uid && !locked(get(groupPath(id)).data));
-        allow update: if false;
+        // 修改：本人在截止前，或團長；不能改掉點單者與建立時間
+        allow update: if (isAdmin(id)
+            || (signedIn() && resource.data.deviceId == request.auth.uid && !locked(get(groupPath(id)).data)))
+          && request.resource.data.deviceId == resource.data.deviceId
+          && request.resource.data.createdAt == resource.data.createdAt
+          && validLine(request.resource.data);
+      }
+
+      // 付款回報：每台裝置一筆（我是誰、帳號末五碼或付款方式），只有本人和團長看得到
+      match /reports/{uid} {
+        allow read: if isAdmin(id) || (signedIn() && request.auth.uid == uid);
+        allow create, update: if signedIn() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['participant', 'ref', 'at'])
+          && request.resource.data.participant is string
+          && request.resource.data.participant.size() > 0 && request.resource.data.participant.size() <= 20
+          && request.resource.data.ref is string && request.resource.data.ref.size() <= 30;
+        allow delete: if isAdmin(id) || (signedIn() && request.auth.uid == uid);
       }
     }
   }

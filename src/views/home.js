@@ -1,5 +1,6 @@
 import { createGroup } from '../store/index.js';
 import { esc, MENU_TEMPLATES } from '../util.js';
+import { forgetVisit, loadHistory } from '../history.js';
 
 /** 把 "HH:MM" 轉成今天（已過則明天）的時間戳；空字串回傳 null */
 function timeToday(value) {
@@ -48,7 +49,10 @@ export function renderHome(app) {
       </label>
       <p class="hint">菜單價格是參考價，開團後可以在管理頁修改成你那間分店的價格。</p>
       <button class="primary">開團</button>
-    </form>`;
+    </form>
+    <section id="history"></section>`;
+
+  renderHistory(app.querySelector('#history'));
 
   const form = app.querySelector('#create');
   form.addEventListener('change', (e) => {
@@ -79,5 +83,26 @@ export function renderHome(app) {
       created = await createGroup({ shopName: template.shop, menu: structuredClone(template), deadline, organizer });
     }
     location.hash = `/g/${created.id}?admin=${created.adminKey}`;
+  });
+}
+
+/** 我的揪團：這台裝置最近開過或參加過的團 */
+function renderHistory(el) {
+  const list = loadHistory();
+  if (!list.length) {
+    el.innerHTML = '';
+    return;
+  }
+  const day = (ms) => new Date(ms).toLocaleDateString('zh-TW', { month: 'numeric', day: 'numeric' });
+  el.innerHTML = `<div class="card"><h2>我的揪團</h2>
+    ${list.map((h) => `<div class="line">
+      <a href="#/g/${esc(h.id)}${h.adminKey ? `?admin=${esc(h.adminKey)}` : ''}">${esc(h.title)}</a>
+      ${h.adminKey ? '<span class="badge">團長</span>' : ''}
+      <span class="muted small">${esc(h.organizer || '')}・${day(h.at)}</span>
+      <button class="small ghost del" data-id="${esc(h.id)}" aria-label="從紀錄移除">✕</button>
+    </div>`).join('')}
+    <p class="hint">只存在這台裝置。移除紀錄不會刪掉揪團。</p></div>`;
+  el.querySelectorAll('.del').forEach((b) => {
+    b.onclick = () => { forgetVisit(b.dataset.id); renderHistory(el); };
   });
 }

@@ -70,8 +70,9 @@ export async function createGroup({ shopName = null, menu = null, deadline, orga
 }
 
 /** 訂閱揪團資料；回傳取消訂閱的函式。callback 收到 { group, lines } 或 null（找不到） */
-export function subscribe(id, callback) {
-  const wrapped = (data) => callback(data && { group: data.group, lines: data.lines });
+export function subscribe(id, callback, { admin = false } = {}) {
+  const visible = (reports = {}) => (admin ? reports : Object.fromEntries(Object.entries(reports).filter(([k]) => k === deviceId())));
+  const wrapped = (data) => callback(data && { group: data.group, lines: data.lines, reports: visible(data.reports) });
   if (!listeners.has(id)) listeners.set(id, new Set());
   listeners.get(id).add(wrapped);
   wrapped(load(id));
@@ -82,6 +83,23 @@ export async function addLine(id, line, { locked }) {
   const data = load(id);
   if (locked) throw new Error('已截止，不能再點單');
   data.lines.push({ ...line, id: randomId(), deviceId: deviceId(), createdAt: Date.now() });
+  save(id, data);
+}
+
+export async function updateLine(id, lineId, fields, { adminKey, locked } = {}) {
+  const data = load(id);
+  const line = data.lines.find((l) => l.id === lineId);
+  if (!line) return;
+  assertCanEditLine(data, line, adminKey, locked);
+  Object.assign(line, fields);
+  save(id, data);
+}
+
+export async function setReport(id, report) {
+  const data = load(id);
+  data.reports = { ...data.reports };
+  if (report) data.reports[deviceId()] = { participant: report.participant, ref: report.ref, at: Date.now() };
+  else delete data.reports[deviceId()];
   save(id, data);
 }
 

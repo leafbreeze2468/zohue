@@ -4,4 +4,4 @@ import * as firestore from './firestore.js';
 
 const store = import.meta.env.VITE_FIREBASE_PROJECT_ID && import.meta.env.VITE_STORE !== 'local' ? firestore : local;
 
-export const { init, deviceId, createGroup, claimAdmin, subscribe, addLine, deleteLine, vote, updateGroup } = store;
+export const { init, deviceId, createGroup, claimAdmin, subscribe, addLine, updateLine, deleteLine, setReport, vote, updateGroup } = store;

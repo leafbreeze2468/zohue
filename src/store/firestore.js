@@ -5,6 +5,7 @@
 //   groups/{id}                 揪團（所有人可讀）
 //   groups/{id}/lines/{lineId}  點單（所有人可讀）
 //   groups/{id}/admins/{uid}    已用管理連結驗證過的團長裝置
+//   groups/{id}/reports/{uid}   付款回報（只有本人與團長可讀）
 //   secrets/{id}                管理金鑰（任何人都讀不到，只有規則能比對）
 
 import { initializeApp } from 'firebase/app';
@@ -80,13 +81,17 @@ export async function claimAdmin(id, adminKey) {
   }
 }
 
-/** 訂閱揪團資料；callback 收到 { group, lines } 或 null（找不到） */
-export function subscribe(id, callback) {
+/**
+ * 訂閱揪團資料；callback 收到 { group, lines, reports } 或 null（找不到）。
+ * reports 依讀取權限：團長拿到全部，其他人只拿到自己的那筆。
+ */
+export function subscribe(id, callback, { admin = false } = {}) {
   let group;
   let lines;
+  let reports = {};
   const emit = () => {
     if (group === null) callback(null);
-    else if (group && lines) callback({ group, lines });
+    else if (group && lines) callback({ group, lines, reports });
   };
   const offGroup = onSnapshot(groupRef(id), (snap) => {
     group = snap.exists() ? snap.data() : null;
@@ -96,13 +101,35 @@ export function subscribe(id, callback) {
     lines = snap.docs.map((d) => ({ ...d.data(), id: d.id }));
     emit();
   }, () => {});
-  return () => { offGroup(); offLines(); };
+  const reportsCol = collection(db, 'groups', id, 'reports');
+  const offReports = admin
+    ? onSnapshot(reportsCol, (snap) => {
+      reports = Object.fromEntries(snap.docs.map((d) => [d.id, d.data()]));
+      emit();
+    }, () => {})
+    : onSnapshot(doc(reportsCol, deviceId()), (snap) => {
+      reports = snap.exists() ? { [snap.id]: snap.data() } : {};
+      emit();
+    }, () => {});
+  return () => { offGroup(); offLines(); offReports(); };
 }
 
 export async function addLine(id, line, { locked }) {
   if (locked) throw new Error('已截止，不能再點單');
   const ref = doc(collection(db, 'groups', id, 'lines'));
   await setDoc(ref, { ...line, deviceId: deviceId(), createdAt: Date.now() }).catch((e) => { throw friendly(e); });
+}
+
+/** 修改點單內容（本人在截止前，或團長） */
+export async function updateLine(id, lineId, fields) {
+  await updateDoc(doc(db, 'groups', id, 'lines', lineId), fields).catch((e) => { throw friendly(e); });
+}
+
+/** 回報付款；傳 null 代表撤回 */
+export async function setReport(id, report) {
+  const ref = doc(db, 'groups', id, 'reports', deviceId());
+  await (report ? setDoc(ref, { participant: report.participant, ref: report.ref, at: Date.now() }) : deleteDoc(ref))
+    .catch((e) => { throw friendly(e); });
 }
 
 export async function deleteLine(id, lineId) {
