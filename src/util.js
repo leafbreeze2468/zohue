@@ -7,9 +7,9 @@ export async function copy(text, button) {
   try {
     await navigator.clipboard.writeText(text);
     if (button) {
-      const old = button.textContent;
+      const old = button.innerHTML;
       button.textContent = '已複製 ✓';
-      setTimeout(() => { button.textContent = old; }, 1500);
+      setTimeout(() => { button.innerHTML = old; }, 1500);
     }
   } catch {
     prompt('請手動複製：', text);
@@ -26,3 +26,8 @@ const modules = import.meta.glob('../data/menus/*.json', { eager: true, import: 
 export const MENU_TEMPLATES = Object.entries(modules)
   .map(([path, menu]) => ({ key: path.split('/').pop().replace('.json', ''), menu }))
   .sort((a, b) => a.key.startsWith('_') - b.key.startsWith('_'));
+
+/** 切換整頁的底色與主色（見 style.css 的 body[data-page]） */
+export function setPage(name) {
+  document.body.dataset.page = name;
+}

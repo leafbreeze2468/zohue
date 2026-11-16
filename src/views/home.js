@@ -1,6 +1,7 @@
 import { createGroup } from '../store/index.js';
-import { esc, MENU_TEMPLATES } from '../util.js';
+import { esc, MENU_TEMPLATES, setPage } from '../util.js';
 import { forgetVisit, loadHistory } from '../history.js';
+import { icon, LOGO } from '../icons.js';
 
 /** 把 "HH:MM" 轉成今天（已過則明天）的時間戳；空字串回傳 null */
 function timeToday(value) {
@@ -15,12 +16,13 @@ function timeToday(value) {
 export function renderHome(app) {
   const name = localStorage.getItem('zohue:name') || '';
   const shops = MENU_TEMPLATES.map((t, i) => ({ i, shop: t.menu.shop }));
+  setPage('home');
   app.innerHTML = `
     <header class="hero">
-      <h1>做伙飲</h1>
+      <div class="brand">${LOGO}<b>做伙飲</b></div>
       <p>貼一個連結，大家自己點，自動算好彙總單和每人金額。</p>
     </header>
-    <form id="create" class="card">
+    <form id="create" class="sec">
       <h2>開一團</h2>
       <label>你的名字（團長）
         <input name="organizer" required maxlength="20" value="${esc(name)}" placeholder="例如：小明" />
@@ -94,10 +96,11 @@ function renderHistory(el) {
     return;
   }
   const day = (ms) => new Date(ms).toLocaleDateString('zh-TW', { month: 'numeric', day: 'numeric' });
-  el.innerHTML = `<div class="card"><h2>我的揪團</h2>
+  el.innerHTML = `<div class="sec"><h2>${icon('history')}我的揪團</h2>
     ${list.map((h) => `<div class="line">
       <a href="#/g/${esc(h.id)}${h.adminKey ? `?admin=${esc(h.adminKey)}` : ''}">${esc(h.title)}</a>
-      ${h.adminKey ? '<span class="badge">團長</span>' : ''}
+      ${h.adminKey ? '<span class="badge milk">團長</span>' : ''}
+      ${h.title === '今天喝哪家？' ? '<span class="badge taro">投票中</span>' : ''}
       <span class="muted small">${esc(h.organizer || '')}・${day(h.at)}</span>
       <button class="small ghost del" data-id="${esc(h.id)}" aria-label="從紀錄移除">✕</button>
     </div>`).join('')}

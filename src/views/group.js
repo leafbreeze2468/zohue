@@ -1,10 +1,11 @@
 import { addLine, deleteLine, deviceId, setReport, subscribe, updateGroup, updateLine, vote } from '../store/index.js';
 import { recordVisit } from '../history.js';
+import { icon } from '../icons.js';
 import {
   bill, isLocked, lineTotal, mergeRoster, missingMembers, pollClosed, pollResult, promotionDiscount, promotionLabel, reminderText, shopSlip,
 } from '../domain.js';
 import { editRoster, loadRoster, loadRosterIgnored, rememberUsual, saveRoster, usualFor } from '../usual.js';
-import { copy, esc, formatTime, MENU_TEMPLATES } from '../util.js';
+import { copy, esc, formatTime, MENU_TEMPLATES, setPage } from '../util.js';
 
 /**
  * 揪團頁。團員與團長共用；帶 adminKey 時多出管理功能。
@@ -27,14 +28,13 @@ export function renderGroup(app, id, adminKey) {
       <button data-tab="slip">彙總單${admin ? '／收款' : ''}</button>
     </nav>
     <section id="tab-order">
-      <label class="card name-row">你的名字
+      <label class="name-row">你的名字
         <input id="who" maxlength="20" value="${esc(localStorage.getItem('zohue:name') || '')}" placeholder="點單前先填名字" />
       </label>
       <div id="usual"></div>
-      ${admin ? '<div id="roster" class="card"></div>' : ''}
+      ${admin ? '<div id="roster" class="block lemon"></div>' : ''}
       <div id="menu"></div>
-      <h3>大家點了什麼</h3>
-      <div id="lines"></div>
+      <div class="sec"><h2 id="lines-title">大家點了什麼</h2><div id="lines"></div></div>
     </section>
     <section id="tab-slip" hidden></section>
     <dialog id="dlg"></dialog>`;
@@ -50,6 +50,7 @@ export function renderGroup(app, id, adminKey) {
     app.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === t));
     $('#tab-order').hidden = t !== 'order';
     $('#tab-slip').hidden = t !== 'slip';
+    setPage(t);
   });
 
   // ── 標頭 ───────────────────────────────────────────────
@@ -57,15 +58,15 @@ export function renderGroup(app, id, adminKey) {
     const g = data.group;
     const share = `${location.origin}${location.pathname}#/g/${id}`;
     const polling = g.phase === 'poll';
-    const status = polling ? `<span class="badge">${formatTime(g.pollDeadline)} 投票截止</span>`
-      : locked() ? '<span class="badge closed">已截止</span>'
-      : g.deadline ? `<span class="badge">${formatTime(g.deadline)} 截止</span>` : '<span class="badge">未設截止</span>';
+    const status = polling ? `<span class="badge taro">${icon('clock')}${formatTime(g.pollDeadline)} 投票截止</span>`
+      : locked() ? `<span class="badge closed">${icon('lock')}已截止</span>`
+      : g.deadline ? `<span class="badge">${icon('clock')}${formatTime(g.deadline)} 截止</span>` : '';
     $('#head').innerHTML = `
       <h1>${polling ? '今天喝哪家？' : esc(g.shopName)} ${status}</h1>
       <p class="muted">團長：${esc(g.organizer)}</p>
       <div class="row">
-        <button id="copy-share">複製點單連結</button>
-        ${admin ? `<button id="copy-admin" class="ghost">複製管理連結</button>
+        <button id="copy-share">${icon('link')}複製點單連結</button>
+        ${admin ? `<button id="copy-admin" class="ghost">${icon('key')}複製管理連結</button>
           ${polling ? '' : `<button id="toggle-lock" class="ghost">${locked() ? '解鎖' : '提前截止'}</button>`}` : ''}
       </div>
       ${admin ? '<p class="hint">管理連結可以修改所有人的點單，請不要貼到群組。</p>' : ''}`;
@@ -91,8 +92,8 @@ export function renderGroup(app, id, adminKey) {
     const closed = pollClosed(g);
     const total = counts.reduce((s, c) => s + c.votes, 0);
     $('#poll').innerHTML = `
-      <div class="card">
-        <h2>${closed ? `投票結束：${esc(winner.shop)} 勝出` : '投一票吧'}</h2>
+      <div class="block taro">
+        <h2>${icon('vote')}${closed ? `投票結束：${esc(winner.shop)} 勝出` : '投一票吧'}</h2>
         ${counts.map((c) => `
           <button class="vote ${mine === c.key ? 'voted' : ''}" data-key="${esc(c.key)}" ${closed ? 'disabled' : ''}>
             <span>${esc(c.shop)}</span><span class="muted">${c.votes} 票</span>
@@ -117,8 +118,8 @@ export function renderGroup(app, id, adminKey) {
       return;
     }
     const text = usual.lines.map((l) => `${l.item}（${l.size}）${l.sugar}／${l.ice}${l.toppings.length ? `＋${l.toppings.map((t) => t.name).join('＋')}` : ''}${l.qty > 1 ? ` ×${l.qty}` : ''}`).join('、');
-    $('#usual').innerHTML = `<div class="card usual">
-      <div><b>老樣子？</b><br><span class="muted">${esc(text)}</span>
+    $('#usual').innerHTML = `<div class="block milk usual">
+      <div><span class="head">${icon('repeat')}老樣子？</span><span class="small">${esc(text)}</span>
       ${usual.skipped.length ? `<br><span class="hint">${esc(usual.skipped.join('、'))} 菜單上找不到，已略過</span>` : ''}</div>
       <button id="usual-btn" class="primary">一鍵點</button></div>`;
     $('#usual-btn').onclick = async () => {
@@ -138,7 +139,7 @@ export function renderGroup(app, id, adminKey) {
     if (merged !== roster) saveRoster((roster = merged));
     const missing = missingMembers(roster, data.lines);
     $('#roster').innerHTML = `
-      <h2>誰還沒點 ${roster.length ? `<span class="muted small">${roster.length - missing.length}/${roster.length}</span>` : ''}</h2>
+      <h2>${icon('users')}誰還沒點 ${roster.length ? `<span class="muted small">${roster.length - missing.length}/${roster.length}</span>` : ''}</h2>
       ${roster.length ? (missing.length ? `<p>${missing.map(esc).join('、')}</p><button id="copy-missing" class="small">複製提醒訊息</button>`
         : '<p>大家都點了 🎉</p>') : '<p class="muted">點過單的人會自動加進名單，下次開團就能看到誰還沒點。</p>'}
       <details><summary class="small">編輯成員名單</summary>
@@ -162,7 +163,7 @@ export function renderGroup(app, id, adminKey) {
     $('#menu').innerHTML = `
       ${admin ? `<button id="edit-prices" class="ghost small">${editPrices ? '完成修改' : '修改價格（只影響這一團）'}</button>` : ''}
       ${menu.categories.map((c, ci) => `
-        <details class="card" ${ci === 0 ? 'open' : ''}>
+        <details class="cat" ${ci === 0 ? 'open' : ''}>
           <summary>${esc(c.name)}</summary>
           ${c.items.map((it, ii) => `
             <div class="menu-item" data-c="${ci}" data-i="${ii}">
@@ -170,7 +171,7 @@ export function renderGroup(app, id, adminKey) {
               <span class="prices">${it.sizes.map((s, si) => editPrices
                 ? `${esc(s.size)} <input class="price" type="number" min="0" data-s="${si}" value="${s.price}" />`
                 : `${esc(s.size)} $${s.price}`).join('　')}</span>
-              ${editPrices ? '' : it.sizes.length ? '<button class="add">＋</button>' : '<span class="muted small">價格待補</span>'}
+              ${editPrices ? '' : it.sizes.length ? `<button class="add" aria-label="點${esc(it.name)}">${icon('plus')}</button>` : '<span class="muted small">價格待補</span>'}
             </div>`).join('')}
         </details>`).join('')}
       ${menu.note ? `<p class="hint">${esc(menu.note)}</p>` : ''}`;
@@ -255,6 +256,8 @@ export function renderGroup(app, id, adminKey) {
   }
 
   function renderLines() {
+    const cups = data.lines.reduce((n, l) => n + l.qty, 0);
+    $('#lines-title').textContent = cups ? `大家點了什麼・${cups} 杯` : '大家點了什麼';
     if (!data.lines.length) {
       $('#lines').innerHTML = '<p class="muted">還沒有人點，當第一個吧！</p>';
       return;
@@ -306,15 +309,15 @@ export function renderGroup(app, id, adminKey) {
     const result = bill(data.lines, g.adjustments, g.promotions || []);
     const paid = g.paid || {};
     $('#tab-slip').innerHTML = `
-      <div class="card">
-        <h2>給店家的彙總單 <button id="copy-slip" class="small">複製</button> <button id="clerk" class="small">店員模式</button></h2>
+      <div class="sec">
+        <h2>${icon('receipt')}給店家的彙總單 <button id="copy-slip" class="small">複製</button> <button id="clerk" class="small">${icon('list')}店員模式</button></h2>
         ${slip.length ? `<table>${slip.map((r) => `<tr>
           <td>${esc(r.item)} ${esc(r.size)}<br><span class="muted">${esc(r.sugar)}／${esc(r.ice)}${r.toppings.length ? `＋${esc(r.toppings.join('＋'))}` : ''}</span>
           ${r.notes.length ? `<br><span class="note">${esc(r.notes.join('；'))}</span>` : ''}</td>
           <td class="num">×${r.qty}</td><td class="num">$${r.unitPrice * r.qty}</td></tr>`).join('')}</table>` : '<p class="muted">還沒有點單</p>'}
         <p class="total">共 ${result.totalCups} 杯，品項小計 $${result.itemsTotal}</p>
       </div>
-      <div class="card">
+      <div class="sec" ${admin || (g.adjustments || []).length ? '' : 'hidden'}>
         <h2>額外費用／折扣</h2>
         ${(g.adjustments || []).map((a, i) => `<div class="line">${esc(a.label)} ${a.amount > 0 ? '+' : ''}$${a.amount}
           <span class="muted">（${a.split === 'perCup' ? '依杯數' : '平均'}分攤）</span>
@@ -325,8 +328,8 @@ export function renderGroup(app, id, adminKey) {
           <select name="split"><option value="equal">平均分攤</option><option value="perCup">依杯數分攤</option></select>
           <button>新增</button></form>` : ''}
       </div>
-      <div class="card">
-        <h2>優惠</h2>
+      <div class="sec" ${admin || (g.promotions || []).length ? '' : 'hidden'}>
+        <h2>${icon('tag')}優惠</h2>
         ${(g.promotions || []).map((p, i) => `<div class="line">${esc(promotionLabel(p))}
           <span class="muted">折 $${promotionDiscount(data.lines, p)}，依消費金額分攤</span>
           ${admin ? `<button class="small ghost del-promo" data-i="${i}">刪除</button>` : ''}</div>`).join('') || '<p class="muted">沒有</p>'}
@@ -338,7 +341,7 @@ export function renderGroup(app, id, adminKey) {
           <p class="hint">買 N 送 M 會送最便宜的杯；第二杯半價由貴到便宜兩兩一組。店家規則不同時，請改用額外費用輸入。</p>` : ''}
       </div>
       ${payCard(result)}
-      <div class="card">
+      <div class="sec">
         <h2>每人應付 <span class="muted small">總計 $${result.grandTotal}</span></h2>
         ${result.people.map((p) => {
           const r = reportFor(p.participant);
@@ -410,9 +413,9 @@ export function renderGroup(app, id, adminKey) {
         <button>我已付款${myNames.length > 1 ? '' : ` $${due(myNames[0])}`}</button>
       </form>`;
     }
-    return `<div class="card">
-      <h2>付款方式</h2>
-      ${g.payInfo ? `<p class="pay-info">${esc(g.payInfo)}</p><button id="copy-payinfo" class="small">複製</button>`
+    return `<div class="block matcha">
+      <h2>${icon('wallet')}付款方式</h2>
+      ${g.payInfo ? `<p class="pay-info">${esc(g.payInfo)}</p><div><button id="copy-payinfo" class="small">複製</button></div>`
         : `<p class="muted">${admin ? '填上收款方式，大家就知道要轉到哪裡。' : '團長還沒填收款方式。'}</p>`}
       ${admin ? `<details ${g.payInfo ? '' : 'open'}><summary class="small">${g.payInfo ? '修改' : '填寫'}收款方式</summary>
         <textarea id="payinfo-input" rows="2" maxlength="100" placeholder="例如：國泰 013 帳號 1234-5678-9012，或 LINE Pay 轉給我">${esc(g.payInfo || '')}</textarea>
@@ -460,13 +463,14 @@ export function renderGroup(app, id, adminKey) {
   const unsubscribe = subscribe(id, onData, { admin });
   function onData(next) {
     if (!next) {
-      app.innerHTML = '<div class="card"><h2>找不到這一團</h2><p>連結可能打錯了，或這團已經過期刪除。</p><a href="#/">自己開一團</a></div>';
+      app.innerHTML = '<div class="block berry"><h2>找不到這一團</h2><p>連結可能打錯了，或這團已經過期刪除。</p><a href="#/">自己開一團</a></div>';
       return;
     }
     data = next;
-    recordVisit({ id, title: data.group.phase === 'poll' ? '投票中：今天喝哪家？' : data.group.shopName, organizer: data.group.organizer, adminKey });
+    recordVisit({ id, title: data.group.phase === 'poll' ? '今天喝哪家？' : data.group.shopName, organizer: data.group.organizer, adminKey });
     renderHead();
     const polling = data.group.phase === 'poll';
+    setPage(polling ? 'poll' : app.querySelector('.tabs .active').dataset.tab);
     $('#poll').hidden = !polling;
     app.querySelector('.tabs').hidden = polling;
     if (polling) {
