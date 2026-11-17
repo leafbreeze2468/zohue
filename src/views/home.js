@@ -2,6 +2,7 @@ import { createGroup } from '../store/index.js';
 import { esc, MENU_TEMPLATES, setPage } from '../util.js';
 import { forgetVisit, loadHistory } from '../history.js';
 import { icon, LOGO } from '../icons.js';
+import { renderInstall } from '../install.js';
 
 /** 把 "HH:MM" 轉成今天（已過則明天）的時間戳；空字串回傳 null */
 function timeToday(value) {
@@ -22,6 +23,7 @@ export function renderHome(app) {
       <div class="brand">${LOGO}<b>做伙飲</b></div>
       <p>貼一個連結，大家自己點，自動算好彙總單和每人金額。</p>
     </header>
+    <div id="install"></div>
     <form id="create" class="sec">
       <h2>開一團</h2>
       <label>你的名字（團長）
@@ -55,6 +57,7 @@ export function renderHome(app) {
     <section id="history"></section>`;
 
   renderHistory(app.querySelector('#history'));
+  renderInstall(app.querySelector('#install'));
 
   const form = app.querySelector('#create');
   form.addEventListener('change', (e) => {

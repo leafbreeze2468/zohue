@@ -2,8 +2,10 @@ import { renderHome } from './views/home.js';
 import { renderGroup } from './views/group.js';
 import { claimAdmin, init } from './store/index.js';
 import { ICON_SPRITE } from './icons.js';
+import { registerServiceWorker } from './install.js';
 
 document.body.insertAdjacentHTML('afterbegin', ICON_SPRITE);
+registerServiceWorker();
 
 // 路由（hash）：
 //   #/                      首頁：開團

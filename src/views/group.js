@@ -1,6 +1,7 @@
 import { addLine, deleteLine, deviceId, setReport, subscribe, updateGroup, updateLine, vote } from '../store/index.js';
 import { recordVisit } from '../history.js';
 import { icon } from '../icons.js';
+import { renderInstall } from '../install.js';
 import {
   bill, isLocked, lineTotal, mergeRoster, missingMembers, pollClosed, pollResult, promotionDiscount, promotionLabel, reminderText, shopSlip,
 } from '../domain.js';
@@ -22,6 +23,7 @@ export function renderGroup(app, id, adminKey) {
 
   app.innerHTML = `
     <header id="head" class="group-head"></header>
+    ${admin ? '<div id="install"></div>' : ''}
     <section id="poll" hidden></section>
     <nav class="tabs">
       <button data-tab="order" class="active">點單</button>
@@ -40,6 +42,7 @@ export function renderGroup(app, id, adminKey) {
     <dialog id="dlg"></dialog>`;
 
   const $ = (sel) => app.querySelector(sel);
+  if (admin) renderInstall($('#install'));
   const locked = () => data && isLocked(data.group);
   const fail = (err) => alert(err.message);
 
